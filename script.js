@@ -1,8 +1,4 @@
 /*
-Milestone 1
-Partendo dalla struttura dati fornita, visualizzare in pagina un box per ogni icona, in cui è presente il nome dell'icona e l'icona stessa.
-Milestone 2
-Ciascuna icona ha una proprietà "color": utilizzare questa proprietà per visualizzare le icone del colore corrispondente.
 Milestone 3
 Aggiungere alla pagina una select in cui le options corrispondono ai vari tipi di icone (animal, vegetable, user). Quando l'utente seleziona un tipo dalla select, visualizzare solamente le icone corrispondenti.
 BONUS
@@ -16,13 +12,39 @@ Come possiamo usare i dati presenti nella nostra struttura dati per creare l'ele
 Inizialmente può essere sufficiente stampare dei semplici div, senza alcuno stile, con all'interno l'icona e uno span con il nome. Solamente quando la parte logica è completa, ci dedichiamo al css.
 */
 
-const iconContainer = document.querySelector("main");
+const iconContainer = document.querySelector(".container");
 //console.log(iconContainer);
 
-createCard(iconsArray);
+createCards(iconsArray);
 
-function createCard(array) {
-    iconContainer.innerHTML = "";
+const iconSelector = document.querySelector("#icon-selector");
+//console.log(iconSelector);
+
+iconSelector.addEventListener("change", function () {
+	if (iconSelector.value != 'all') {
+		const sortedIconsArray = sortIconsByType(iconsArray, iconSelector.value);
+		createCards(sortedIconsArray);
+	} else {
+		createCards(iconsArray);
+	}
+});
+
+
+
+
+
+function sortIconsByType(array, eleFilter) {
+	const sortedArray = array.filter((arrayElement) => {
+		if (arrayElement.type == eleFilter) {
+			return true;
+		}
+		return false;
+	});
+	return sortedArray;
+}
+
+function createCards(array) {
+	iconContainer.innerHTML = "";
 	array.forEach((element) => {
 		const iconCard = document.createElement("div");
 		iconCard.classList.add("card");
