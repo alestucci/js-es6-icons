@@ -1,6 +1,4 @@
 /*
-Milestone 3
-Aggiungere alla pagina una select in cui le options corrispondono ai vari tipi di icone (animal, vegetable, user). Quando l'utente seleziona un tipo dalla select, visualizzare solamente le icone corrispondenti.
 BONUS
 1- modificare la struttura dati fornita e valorizzare la proprietà "color" in modo dinamico: generare in modo casuale un codice colore, sapendo che la notazione esadecimale è formata dal simbolo "#" seguito da 6 caratteri alfanumerici compresi tra 0 e 9 e A e F.
 2- popolare le options della select della milestone 3 dinamicamente.
@@ -29,9 +27,35 @@ iconSelector.addEventListener("change", function () {
 	}
 });
 
+function createRandomColor() {
+    const symbols = [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F'
+    ];
+    let hexColor = "#";
+    for (let index = 0; index < 6; index++) {
+        hexColor += symbols[randomNumber(0, 15)];        
+    }
+    return hexColor
+}
 
-
-
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+  }
 
 function sortIconsByType(array, eleFilter) {
 	const sortedArray = array.filter((arrayElement) => {
@@ -49,7 +73,7 @@ function createCards(array) {
 		const iconCard = document.createElement("div");
 		iconCard.classList.add("card");
 		iconCard.innerHTML = `
-    <span class="icon ${element.color}"><i class="${element.family} ${element.prefix}${element.name}"></i></span>
+    <span class="icon" style="color: ${createRandomColor()}"><i class="${element.family} ${element.prefix}${element.name}"></i></span>
     <span class="label">${element.name}</span>
 `;
 		iconContainer.append(iconCard);
